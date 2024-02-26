@@ -22,6 +22,3 @@
 
 Documentation => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
 Installation Video => https://www.youtube.com/watch?v=YYGaDAcGZFM
-
-
-[![YouTube Video](https://img.youtube.com/vi/YYGaDAcGZFM/0.jpg)](https://www.youtube.com/watch?v=YYGaDAcGZFM)
