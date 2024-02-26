@@ -230,9 +230,12 @@ RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target
 EOF
-sudo chown root:root fittrackee.service
-sudo mv fittrackee.service /etc/systemd/system/
+
+sudo chown root:root 	fittrackee.service
+sudo chmod 755 		fittrackee.service
+sudo mv 		fittrackee.service 	/etc/systemd/system/
 sudo systemctl daemon-reload
+sudo systemctl enable fittrackee.service
 }
 #------------------------------------------------------------------------------------------------------------------------------------------------
 ############################################################################################################
@@ -269,6 +272,7 @@ sudo systemctl daemon-reload
 	create_fittrackee_start_script
 	create_fittrackee_service
 
+
 	sudo systemctl enable fittrackee.service
 	sudo systemctl start fittrackee.service
 	sudo timeout 1 systemctl status fittrackee.service
@@ -278,19 +282,3 @@ sudo systemctl daemon-reload
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 exit
-
-#------------------------------------------------------------------------------------------------------------------------------------------------
-
-#TODO => change absolute install path - avoid $HOME var
-
-
-# add admin accound
-ftcli users create admin --email admin@root.net --password adminPassword
-ftcli users update admin --set-admin true
-
-# postgre commands
-sudo -u postgres psql -c "DROP DATABASE fittrackee;"											# Datenbank löschen
-sudo -u postgres psql -c "DROP USER fittrackee;"											# User löschen
-sudo -u postgres psql 2> /dev/null -c "SELECT usename, datname FROM pg_user, pg_database WHERE pg_user.usesysid = pg_database.datdba;"	# User und Datenbanken anzeigen
-
-
