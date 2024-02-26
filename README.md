@@ -20,7 +20,5 @@
  FitrackeePort=5000					# fittrackee port 
 
 
- 
-[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)](https://youtu.be/vt5fpE0bzSY)
-
-https://www.youtube.com/watch?v=YYGaDAcGZFM
+Documentation => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
+Installation Video => https://www.youtube.com/watch?v=YYGaDAcGZFM
