@@ -18,3 +18,9 @@
  PSQLData=fittrackee					# DO NOT CHANGE - otherwise error in database initiation 
  FitrackeeHost=0.0.0.0					# 0.0.0.0 for each client connection, except localhost / 127.0.0.1
  FitrackeePort=5000					# fittrackee port 
+
+
+ 
+[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)](https://youtu.be/vt5fpE0bzSY)
+
+https://www.youtube.com/watch?v=YYGaDAcGZFM
