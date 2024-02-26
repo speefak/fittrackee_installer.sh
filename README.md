@@ -11,7 +11,7 @@
 #		  https://samr1.github.io/FitTrackee/en/index.html
 #
 
-# config/edit the following parameter in script header
+# config/edit following parameter in script header if needed
  AdminUser="admin"					# admin username
  AdminPass="admin123"					# admin password - min. 8 characters
 
