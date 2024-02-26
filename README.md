@@ -5,13 +5,11 @@
 # licence       : (CC) BY-NC-SA
 # version 	: 0.5
 # notice 	:
-# infosource	: https://reintech.io/blog/installing-postgresql-on-debian-12-for-beginners
-#		  https://astrid-guenther.de/fittrackee-uberspace-installation/#fittrackee-installieren-und-virtuelle-umgebung-f%C3%BCr-python-einrichten
-#		  https://lab.uberspace.de/guide_postgresql/
-#		  https://samr1.github.io/FitTrackee/en/index.html
+# infosource	: https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
 #
 
 # config/edit following parameter in script header if needed
+
  AdminUser="admin"					# admin username
  AdminPass="admin123"					# admin password - min. 8 characters
 
