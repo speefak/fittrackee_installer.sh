@@ -21,5 +21,7 @@
 
 
 Documentation => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
-Installation Video => https://www.youtube.com/watch?v=YYGaDAcGZFM
+Installation Video => https://youtu.be/YYGaDAcGZFM
+
 REAR ISO Image => https://drive.google.com/file/d/1DJMHKrH1NbQKVlxnfhqYQwCWrRx57Er9
+REAR install Video =>  https://youtu.be/9YokUFJalB8 
