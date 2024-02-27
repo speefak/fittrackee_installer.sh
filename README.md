@@ -16,7 +16,7 @@
  PSQLUser=fittrackee					# postgreSQL user
  PSQLPass=fittrackeePW					# postgreSQL password
  PSQLData=fittrackee					# DO NOT CHANGE - otherwise error in database initiation 
- FitrackeeHost=0.0.0.0					# 0.0.0.0 for each client connection, except localhost / 127.0.0.1
+ FitrackeeHost=0.0.0.0					# 0.0.0.0 for each client connection, except 127.0.0.1
  FitrackeePort=5000					# fittrackee port 
 
 
