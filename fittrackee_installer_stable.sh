@@ -3,7 +3,7 @@
 # desciption    : install fittrackee on debian 12 netinstall 
 # autor         : speefak ( itoss@gmx.de )
 # licence       : (CC) BY-NC-SA
-# version 	: 0.5
+# version 	: 0.6
 # notice 	:
 # infosource	: https://reintech.io/blog/installing-postgresql-on-debian-12-for-beginners
 #		  https://astrid-guenther.de/fittrackee-uberspace-installation/#fittrackee-installieren-und-virtuelle-umgebung-f%C3%BCr-python-einrichten
@@ -27,6 +27,7 @@
  FitrackeePortClient=3000				# ?
  FittrackeeUser=$(whoami)
 
+ AppKeyCharacterCount=50
  RequiredPackets="sed python3-full python3-pip postgresql postgresql-client-common postgresql-client-15"
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
@@ -163,7 +164,7 @@ export HOST=$FitrackeeHost
 export PORT=$FitrackeePort
 export CLIENT_PORT=$FitrackeePortClient
 # export APP_SETTINGS=fittrackee.config.ProductionConfig
-export APP_SECRET_KEY='please change me'
+export APP_SECRET_KEY='$(echo -n $(openssl rand -base64 $AppKeyCharacterCount ) | tr -d " ")'
 # export APP_WORKERS=
 export APP_LOG=$HOME/fittrackee/fittrackee.log
 export UPLOAD_FOLDER=$HOME/fittrackee/uploads
@@ -192,8 +193,8 @@ export SENDER_EMAIL=
 
 # Weather
 # available weather API providers: visualcrossing
-# export WEATHER_API_PROVIDER=
-# export WEATHER_API_KEY=
+# export WEATHER_API_PROVIDER=visualcrossing
+# export WEATHER_API_KEY=<API_KEY  shown when you klick on the accound button after login on visualcrossing webpage>
 EOF
 
 # check environment configuration
@@ -282,3 +283,18 @@ sudo systemctl enable fittrackee.service
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 exit
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+#TODO => change absolute install path - avoid $HOME var
+
+
+# add admin accound
+ftcli users create admin --email admin@root.net --password adminPassword
+ftcli users update admin --set-admin true
+
+# postgre commands
+sudo -u postgres psql -c "DROP DATABASE fittrackee;"											# Datenbank löschen
+sudo -u postgres psql -c "DROP USER fittrackee;"											# User löschen
+sudo -u postgres psql 2> /dev/null -c "SELECT usename, datname FROM pg_user, pg_database WHERE pg_user.usesysid = pg_database.datdba;"	# User und Datenbanken anzeigen
+
