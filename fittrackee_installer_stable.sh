@@ -3,7 +3,7 @@
 # desciption    : install fittrackee on debian 12 netinstall 
 # autor         : speefak ( itoss@gmx.de )
 # licence       : (CC) BY-NC-SA
-# version 	: 0.6
+# version 	: 0.7
 # notice 	:
 # infosource	: https://reintech.io/blog/installing-postgresql-on-debian-12-for-beginners
 #		  https://astrid-guenther.de/fittrackee-uberspace-installation/#fittrackee-installieren-und-virtuelle-umgebung-f%C3%BCr-python-einrichten
@@ -28,7 +28,11 @@
  FittrackeeUser=$(whoami)
 
  AppKeyCharacterCount=50
- RequiredPackets="sed python3-full python3-pip postgresql postgresql-client-common postgresql-client-15"
+ RequiredPackets="sed sudo python3-full python3-pip postgresql postgresql-client-common postgresql-client-15"
+
+ Version=$(cat $(readlink -f $(which $0)) | grep "# version" | head -n1 | awk -F ":" '{print $2}' | sed 's/ //g')
+ ScriptFile=$(readlink -f $(which $0))
+ ScriptName=$(basename $ScriptFile)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
 ############################################################################################################
@@ -65,7 +69,10 @@ usage() {
 	printf "\n"
 	printf " Usage: $(basename $0) <options> "
 	printf "\n"
-	printf " -h		=> (h)elp dialog \n"
+	printf " -h	(h)elp dialog \n"
+	printf " -si	(s)how (s)cript information \n"
+	printf " -i	(i)nstall fittrackee \n"
+	printf " -u 	(u)pdate fittrackee \n"
 	printf  "\n${Red} $1 ${Reset}\n"
 	printf "\n"
 	exit
@@ -103,6 +110,16 @@ check_for_required_packages () {
 	fi
 }
 #------------------------------------------------------------------------------------------------------------------------------------------------
+script_information () {
+	printf "\n"
+	printf " Scriptname: $ScriptName\n"
+	printf " Version:    $Version \n"
+	printf " Location:   $(which $ScriptName)\n"
+	printf " Filesize:   $(ls -lh $0 | cut -d " " -f5)\n"
+	printf "\n"
+	exit 0
+}
+#------------------------------------------------------------------------------------------------------------------------------------------------
 create_virtual_environent () {
 	cd
 	mkdir -p $HOME/fittrackee/uploads
@@ -110,10 +127,31 @@ create_virtual_environent () {
 	python3.11 -m venv fittrackee_venv
 }
 #------------------------------------------------------------------------------------------------------------------------------------------------
+configure_fittrackee_install_parameter () {
+	printf "\n Enter / edit fittrackee konfiguration vars \n\n"
+	read -e -p " Enter admin username: " 		-i "$AdminUser" 		AdminUser
+	read -e -p " Enter admin password: " 		-i "$AdminPass" 		AdminPass
+	read -e -p " Enter postgreSQL user: " 		-i "$PSQLUser" 			PSQLUser
+	read -e -p " Enter postgreSQL password: " 	-i "$PSQLPass" 			PSQLPass
+#	read -e -p " Enter postgreSQL databasename: "	-i "$PSQLDATA" 			PSQLDATA	# DO NOT CHANGE - otherwise error in database initiation 
+	printf " INFO : 0.0.0.0 for each client connection, except localhost / 127.0.0.1 \n"
+	read -e -p " Enter fittrackee host: " 		-i "$FitrackeeHost" 		FitrackeeHost
+	read -e -p " Enter fittrackee webport: " 	-i "$FitrackeePort" 		FitrackeePort
+#	read -e -p " Enter fittrackee client port: " 	-i "$FitrackeePortClient" 	FitrackeePortClient
+	read -e -p " Enter fittrackee systemuser: " 	-i "$FittrackeeUser" 		FittrackeeUser
+}
+#------------------------------------------------------------------------------------------------------------------------------------------------
 install_fittrackee_in_virtual_environment () {
 	source $HOME/fittrackee/fittrackee_venv/bin/activate
 	pip install --upgrade pip
 	pip install fittrackee
+	deactivate
+}
+#------------------------------------------------------------------------------------------------------------------------------------------------
+update_fittrackee_in_virtual_environment () {
+	source $HOME/fittrackee/fittrackee_venv/bin/activate
+	pip install --upgrade pip
+	pip install -U fittrackee
 	deactivate
 }
 #------------------------------------------------------------------------------------------------------------------------------------------------
@@ -197,7 +235,7 @@ export SENDER_EMAIL=
 # export WEATHER_API_KEY=<API_KEY  shown when you klick on the accound button after login on visualcrossing webpage>
 EOF
 
-# check environment configuration
+# check environment co●●●●●●●●nfiguration
 #nano env.cfg
 source env.cfg
 }
@@ -244,57 +282,54 @@ sudo systemctl enable fittrackee.service
 ############################################################################################################
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
+	# usage
+	if [[ -z $1 ]] || [[ $1 == "-h" ]]; then
+		usage
+	fi
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	# show script information
+	if [[ $1 == "-si" ]]; then
+		script_information
+	fi
+
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
 	# check for root permission
 	if [ ! "$(whoami)" = "root" ]; then echo "";else echo "You are Root !";exit 1;fi
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
-#TODO	# configure dialog
-#	AdminUser="admin"					# admin username
-#	AdminPass="admin123"					# admin password - min. 8 characters
+	# install fittrackee
+	if [[ $1 == "-i" ]]; then
+		load_color_codes
+		configure_fittrackee_install_parameter
+		check_for_required_packages
+		create_virtual_environent
+		install_fittrackee_in_virtual_environment
+		configure_fittrackee_python_virtual_environment
+		create_postgres_database
+		initiate_fittrackee_database
+		create_fittrackee_admin_accound
+		create_fittrackee_start_script
+		create_fittrackee_service
 
-#	PSQLUser=fittrackee					# postgreSQL user
-#	PSQLPass=fittrackeePW					# postgreSQL password
-#	PSQLData=fittrackee					# DO NOT CHANGE - otherwise error in database initiation 
-#	FitrackeeHost=0.0.0.0					# 0.0.0.0 for each client connection, except localhost / 127.0.0.1
-#	FitrackeePort=5000					# fittrackee port 
-#	FitrackeePortClient=3000				# ?
+		sudo systemctl enable fittrackee.service
+		sudo systemctl start fittrackee.service
+		sudo timeout 3 systemctl status fittrackee.service
+
+		print_fittrackee_URL_and_admin
+	fi
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
-	load_color_codes
-	check_for_required_packages
-	create_virtual_environent
-	install_fittrackee_in_virtual_environment
-	configure_fittrackee_python_virtual_environment
-	create_postgres_database
-	initiate_fittrackee_database
-	create_fittrackee_admin_accound
-	create_fittrackee_start_script
-	create_fittrackee_service
-
-
-	sudo systemctl enable fittrackee.service
-	sudo systemctl start fittrackee.service
-	sudo timeout 1 systemctl status fittrackee.service
-
-	print_fittrackee_URL_and_admin
+	# upgrade fittrackee
+	if [[ $1 == "-u" ]]; then
+		printf " \n updating fittrackee \n"
+		update_fittrackee_in_virtual_environment
+	fi
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 exit
-
-#------------------------------------------------------------------------------------------------------------------------------------------------
-
-#TODO => change absolute install path - avoid $HOME var
-
-
-# add admin accound
-ftcli users create admin --email admin@root.net --password adminPassword
-ftcli users update admin --set-admin true
-
-# postgre commands
-sudo -u postgres psql -c "DROP DATABASE fittrackee;"											# Datenbank löschen
-sudo -u postgres psql -c "DROP USER fittrackee;"											# User löschen
-sudo -u postgres psql 2> /dev/null -c "SELECT usename, datname FROM pg_user, pg_database WHERE pg_user.usesysid = pg_database.datdba;"	# User und Datenbanken anzeigen
-
