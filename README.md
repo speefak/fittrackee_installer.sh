@@ -26,4 +26,4 @@ Installation Video  => https://youtu.be/YYGaDAcGZFM
 REAR ISO Image      => https://drive.google.com/file/d/1_t9XrYwlap9RuJaYQwCADh80-Hsat7CP
 REAR install Video  => https://youtu.be/9YokUFJalB8 
 OS Login            => user: user | pass: user
-Fittrackee weblogin => admin@root.net | pass: admin 123
+Fittrackee weblogin => admin@root.net | pass: admin123
