@@ -20,8 +20,10 @@
  FitrackeePort=5000					# fittrackee port 
 
 
-Documentation => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
-Installation Video => https://youtu.be/YYGaDAcGZFM
+Documentation       => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
+Installation Video  => https://youtu.be/YYGaDAcGZFM
 
-REAR ISO Image => https://drive.google.com/file/d/1DJMHKrH1NbQKVlxnfhqYQwCWrRx57Er9
-REAR install Video =>  https://youtu.be/9YokUFJalB8 
+REAR ISO Image      => https://drive.google.com/file/d/1DJMHKrH1NbQKVlxnfhqYQwCWrRx57Er9
+REAR install Video  => https://youtu.be/9YokUFJalB8 
+OS Login            => user: user | pass: user
+Fittrackee weblogin => admin@root.net | pass: admin 123
