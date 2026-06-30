@@ -1,18 +1,20 @@
-    Usage: ipspec <option>
+#!/bin/bash
+# name          : fittrackee_installer.sh
+# desciption    : install fittrackee on debian 12 netinstall 
+# autor         : speefak ( itoss@gmx.de )
+# licence       : (CC) BY-NC-SA
+# version 	    : 0.8
+# notice 	    :
+# infosource	: https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
+#
 
-    -h		help dialog 
-    -i	  	show script information
-    -m		monocrome output
+Documentation       => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
+Installation Video  => https://youtu.be/YYGaDAcGZFM
 
-    default	        show IP / LAN information ( used devices )
-    -v	  	show IP / LAN information ( all devices )
-    -sl		scan LAN
-    -bm             bandwidth measurement
-    -lw		log wan ip
-    -fbr		renew fritzbox WAN IP
-    -cfrp		check for required packets
-
-demovideo => https://youtu.be/fZ6NaLK1mSI
+REAR ISO Image      => https://drive.google.com/file/d/1_t9XrYwlap9RuJaYQwCADh80-Hsat7CP
+REAR install Video  => https://youtu.be/9YokUFJalB8 
+OS Login            => user: user | pass: user
+Fittrackee weblogin => admin@root.net | pass: admin123
 
 --------------------------------------------------------------------------------------------------------------
 
@@ -61,23 +63,7 @@ Thank you for your support! 🙏
 
 
 
-#!/bin/bash
-# name          : fittrackee_installer.sh
-# desciption    : install fittrackee on debian 12 netinstall 
-# autor         : speefak ( itoss@gmx.de )
-# licence       : (CC) BY-NC-SA
-# version 	    : 0.8
-# notice 	    :
-# infosource	: https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
-#
 
-Documentation       => https://speefak.spdns.de/oss_lifestyle/fittrackee-installation-unter-debian-12
-Installation Video  => https://youtu.be/YYGaDAcGZFM
-
-REAR ISO Image      => https://drive.google.com/file/d/1_t9XrYwlap9RuJaYQwCADh80-Hsat7CP
-REAR install Video  => https://youtu.be/9YokUFJalB8 
-OS Login            => user: user | pass: user
-Fittrackee weblogin => admin@root.net | pass: admin123
 
 
 
